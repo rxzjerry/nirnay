@@ -5,7 +5,11 @@ import joblib
 app = Flask(__name__)
 CORS(app)
 
-model = joblib.load("loan_model.pkl")
+import os
+import joblib
+
+model_path = os.path.join(os.path.dirname(__file__), "loan_model.pkl")
+model = joblib.load(model_path)
 
 @app.route("/")
 def home():
