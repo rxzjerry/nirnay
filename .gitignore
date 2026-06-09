@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# ML Models
+*.pkl
+
+# Node
+node_modules/
+
+# VS Code
+.vscode/
+
+# Generated PDFs
+backend/reports/generated_pdfs/
+
+# Environment files
+.env
