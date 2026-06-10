@@ -1,6 +1,8 @@
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from io import BytesIO
+from reportlab.platypus import Table, TableStyle
+from reportlab.lib import colors
 
 def decode_data(data):
     decoded = {}
@@ -48,6 +50,30 @@ def generate_pdf(data, prediction):
 
     data = decode_data(data)
 
+    items = list(data.items())
+    table_data = []
+    for i in range(0, len(items), 2):
+
+        row = []
+
+    key1, val1 = items[i]
+    row.append(f"{key1}: {val1}")
+
+    if i + 1 < len(items):
+        key2, val2 = items[i + 1]
+        row.append(f"{key2}: {val2}")
+    else:
+        row.append("")
+
+    table_data.append(row)
+    table = Table(table_data, colWidths=[250, 250])
+    table.setStyle(TableStyle([
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('PADDING', (0, 0), (-1, -1), 6),
+    ]))
+    content.append(table)
     for key, value in data.items():
         text = Paragraph(f"<b>{key}</b>: {value}", styles["BodyText"])
         content.append(text)
