@@ -79,7 +79,56 @@ function LoanForm() {
       alert("Error connecting to backend");
     }
   };
+  const downloadReport = async () => {
+    let semiurban = 0;
+    let urban = 0;
 
+    if (propertyArea === "Semiurban") {
+      semiurban = 1;
+    } else if (propertyArea === "Urban") {
+      urban = 1;
+    }
+
+  const reportData = {
+    Gender: gender,
+    Married: married,
+    Dependents: dependents,
+    Education: education,
+    Self_Employed: selfEmployed,
+    ApplicantIncome: applicantIncome,
+    CoapplicantIncome: coapplicantIncome,
+    LoanAmount: loanAmount,
+    Loan_Amount_Term: loanTerm,
+    Credit_History: creditHistory,
+    PropertyArea: propertyArea,
+    Property_Area_Semiurban: semiurban,
+    Property_Area_Urban: urban,
+    result: result
+  };
+
+  const response = await fetch(
+    "https://nirnay-5nfx.onrender.com/generate-pdf",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(reportData)
+    }
+  );
+
+  const blob = await response.blob();
+
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  a.download = "Loan_Report.pdf";
+
+  a.click();
+};
   return (
     <div className="main-container">
       <div className="form-card">
@@ -249,8 +298,11 @@ function LoanForm() {
                 : "The application currently does not meet the approval criteria used by the model."}
             </p>
 
-            <button className="download-btn">
-              Download Assessment Report
+            <button
+              className="download-btn"
+              onClick={downloadReport}
+            >
+               Download Assessment Report
             </button>
           </div>
         )}

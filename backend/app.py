@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from pdf_generator import generate_pdf
+from flask import send_file
 import joblib
 
 app = Flask(__name__)
@@ -48,6 +50,26 @@ def predict():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/generate-pdf", methods=["POST"])
+def generate_pdf_route():
+
+    data = request.get_json()
+
+    prediction = data.get("result")
+
+    filename = "reports/generated_pdfs/report.pdf"
+
+    generate_pdf(
+        data,
+        prediction,
+        filename
+    )
+
+    return send_file(
+        filename,
+        as_attachment=True
+    )
 
 if __name__ == "__main__":
     app.run()
