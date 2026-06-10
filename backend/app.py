@@ -53,21 +53,16 @@ def predict():
     
 @app.route("/generate-pdf", methods=["POST"])
 def generate_pdf_route():
-
     data = request.get_json()
 
-    prediction = data.get("result")
+    prediction = data["result"]
 
-    filename = "reports/generated_pdfs/report.pdf"
-
-    generate_pdf(
-        data,
-        prediction,
-        filename
-    )
+    pdf_buffer = generate_pdf(data, prediction)
 
     return send_file(
-        filename,
+        pdf_buffer,
+        download_name="Loan_Report.pdf",
+        mimetype="application/pdf",
         as_attachment=True
     )
 
