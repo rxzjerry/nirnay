@@ -212,7 +212,7 @@ function LoanForm() {
             <label>Applicant Income</label>
             <input
               type="number"
-              placeholder="Enter Applicant Income"
+              placeholder="Monthly Income(₹)"
               value={applicantIncome}
               onChange={(e) => setApplicantIncome(e.target.value)}
             />
@@ -222,7 +222,7 @@ function LoanForm() {
             <label>Co-Applicant Income</label>
             <input
               type="number"
-              placeholder="Enter Co-Applicant Income"
+              placeholder="Monthly Income(₹)"
               value={coapplicantIncome}
               onChange={(e) => setCoapplicantIncome(e.target.value)}
             />
@@ -232,20 +232,26 @@ function LoanForm() {
             <label>Loan Amount</label>
             <input
               type="number"
-              placeholder="Enter Loan Amount"
+              placeholder="Loan Amount(in Thousands)"
               value={loanAmount}
               onChange={(e) => setLoanAmount(e.target.value)}
             />
+            <small className="hint-text">
+              Example: 100 = ₹1 lakh, 250 = ₹2.5 lakh
+            </small>
           </div>
 
           <div className="input-group">
-            <label>Loan Term (Months)</label>
+            <label>Loan Term</label>
             <input
               type="number"
-              placeholder="Enter Loan Term"
+              placeholder="Loan Term (Months)"
               value={loanTerm}
               onChange={(e) => setLoanTerm(e.target.value)}
             />
+            <small className="hint-text">
+              Example: 60 = 5 years, 360 = 30 years
+            </small>
           </div>
 
           <div className="input-group">
