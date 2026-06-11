@@ -93,5 +93,3 @@ The model uses the following applicant details:
 
 ---
 
-
-POST /predict
